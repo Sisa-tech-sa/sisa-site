@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Pack Intranet (Timeline • Déploiement • Achats • Logiciels)</title>
+<meta name="description" content="Pack HTML autonome pour l’INTRANET SISA : timeline, déploiement, liste d’achats et logiciels requis. Light/Dark, prêt à imprimer, fonctionne hors-ligne.">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e9eef9; --muted:#a7b0c3;
+    --brand:#0d83ff; --accent:#29a3ff; --ok:#17c964; --warn:#f5a524; --bad:#f31260;
+    --shadow:0 10px 30px rgba(0,0,0,.45); --radius:16px; --maxw:1180px;
+  }
+  html[data-theme="light"]{
+    --bg:#f7f9fc; --panel:#fff; --ink:#0b1220; --muted:#57607c;
+    --shadow:0 10px 30px rgba(16,37,72,.12);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial}
+  .wrap{max-width:var(--maxw);margin:auto;padding:26px}
+  .hero{display:grid;gap:12px;padding:22px;border-radius:20px;background:var(--panel);box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .hero h1{margin:0;font-size:clamp(26px,4vw,44px)}
+  .muted{color:var(--muted)}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin:12px 0}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)}
+  html[data-theme="dark"] .switch::after{left:23px}
+  nav.tabs{display:flex;gap:10px;flex-wrap:wrap}
+  nav.tabs a{display:inline-block;padding:10px 12px;border-radius:12px;text-decoration:none;border:1px solid rgba(100,120,160,.25);color:var(--ink);background:var(--panel)}
+  nav.tabs a:hover{border-color:rgba(41,163,255,.6)}
+  section.card{background:var(--panel);margin-top:16px;padding:18px;border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  h2{margin:0 0 10px 0}
+  .grid-2{display:grid;gap:16px}
+  @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+  .list{margin:6px 0 0 0;padding:0 0 0 20px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(100,120,160,.35);font-size:.82rem}
+  .ok{color:var(--ok);border-color:rgba(23,201,100,.45)}
+  .warn{color:var(--warn);border-color:rgba(245,165,36,.45)}
+  .bad{color:var(--bad);border-color:rgba(243,18,96,.45)}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 8px;border-top:1px solid rgba(100,120,160,.15);text-align:left;vertical-align:top}
+  thead th{border-top:none;background:transparent;position:sticky;top:0}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:rgba(120,140,170,.15);padding:.1rem .35rem;border-radius:6px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--panel);padding:14px 16px;border-radius:14px;border:1px solid rgba(100,120,160,.12);box-shadow:var(--shadow);margin-top:16px}
+  .btn{border:none;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--brand);color:#fff}
+  .btn.ghost{background:transparent;border:1px solid rgba(100,120,160,.35)}
+  @media print{.toolbar,nav.tabs,.cta,.switch{display:none} .card,.hero{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+@media (max-width:480px){.brand img{height:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="SISA Technologies logo"></div>
+    <div>
+      <h1>Pack INTRANET SISA</h1>
+      <div class="muted">Mise à jour : 2025-09-15 · HTML autonome (light/dark) · prêt à imprimer · fonctionne hors-ligne</div>
+    </div>
+    <div class="toolbar">
+      <nav class="tabs" aria-label="Navigation sections">
+        <a href="#timeline">Timeline</a>
+        <a href="#deploiement">Déploiement</a>
+        <a href="#achats">Liste d’achats</a>
+        <a href="#logiciels">Logiciels requis</a>
+        <a href="#sops">SOP & Sécurité</a>
+      </nav>
+      <button id="theme" class="switch" aria-label="Basculer thème"></button>
+    </div>
+  </header>
+
+  <section id="timeline" class="card">
+    <h2>Timeline — Jalons clés</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Phase 1 — Go-live Intranet</h3>
+        <ul class="list">
+          <li>Serveur SISA (R730XD) prêt : RAID1 SSD entreprise, UPS, réseau propre (VLANs).</li>
+          <li>Publication **site vitrine** en HTML (Cloudflare Pages/DNS).</li>
+          <li>Configuration **Email Routing** + boîtes IMAP (WHC ou autre).</li>
+          <li>Workbench & Lanceur (aperçus) intégrés au portail interne.</li>
+        </ul>
+        <h3>Phase 2 — SISA‑IA (v1)</h3>
+        <ul class="list">
+          <li>Serveur d’inférence central (vLLM/Ollama) + API interne.</li>
+          <li>RAG : Qdrant (index), service FastAPI, citations & audit.</li>
+          <li>OpenWebUI (UI interne), gateway Nginx, SSO/quotas.</li>
+          <li>Monitoring Prometheus/Grafana (latence, tokens, GPU/CPU).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Phase 3 — Services & Sécurité</h3>
+        <ul class="list">
+          <li>Kit **Cloudflare OSBL/Autonomes/PME** (Pages, Turnstile, Analytics).</li>
+          <li>VoIP (FreePBX/Asterisk), trunk SIP CA, E911, TLS/SRTP.</li>
+          <li>Programme **Ventoy** (ISOs secours + scripts + SHA256).</li>
+          <li>Offline & faible connectivité : PWA cache + file locale + sync opportuniste.</li>
+        </ul>
+        <h3>Phase 4 — Évolution</h3>
+        <ul class="list">
+          <li>Plan GPU (CPU → 1×GPU → 2×GPU), montée en gamme modèles.</li>
+          <li>Publier app sur stores via PWA + Capacitor (post-stabilisation).</li>
+          <li>Ajouts marketing : carrousels, “Avantages SISA”, site SEO.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="deploiement" class="card">
+    <h2>Déploiement — Architecture & Étapes</h2>
+    <h3>Architecture logique</h3>
+    <table>
+      <thead><tr><th>Bloc</th><th>Rôle</th><th>Détails</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Gateway Nginx</td>
+          <td>Point d’entrée API/Apps</td>
+          <td>Reverse proxy, quotas, file d’attente simple, headers sécurité, HSTS optionnel.</td>
+        </tr>
+        <tr>
+          <td>SSO (Keycloak)</td>
+          <td>Identité & accès</td>
+          <td>OIDC/SAML; MFA; rôles (Admin/Opérateur/Utilisateur); rotation clés 90 j.</td>
+        </tr>
+        <tr>
+          <td>LLM Serving</td>
+          <td>Inférence</td>
+          <td>vLLM (OpenAI-like) pour prod; Ollama pour maquettes; modèles 7–14B en 4/8-bit.</td>
+        </tr>
+        <tr>
+          <td>RAG & Index</td>
+          <td>Recherche sémantique</td>
+          <td>FastAPI + Qdrant; embeddings GTE/BGE; citations; redaction données sensibles.</td>
+        </tr>
+        <tr>
+          <td>UI interne</td>
+          <td>Utilisation simple</td>
+          <td>OpenWebUI; Workbench SISA (HTML); journaux append-only (audit).</td>
+        </tr>
+        <tr>
+          <td>Monitoring</td>
+          <td>Observabilité</td>
+          <td>Prometheus/Grafana; alertes latence/erreurs; tableau de bord coûts/volume.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Structure réseau</h3>
+    <ul class="list">
+      <li>VLAN **IA** dédié; **WireGuard** admin; DNS local; QoS VoIP.</li>
+      <li>Chemin : ONT/Modem → Routeur pfSense → Switch manageable (VLAN/LACP) → Serveur & postes.</li>
+      <li>Journaux inviolables (append-only) + export audit JSON/CSV.</li>
+      <li>Backups réguliers (indices RAG + bruts) + restauration testée.</li>
+    </ul>
+
+    <h3>Étapes (runbook)</h3>
+    <ol class="list">
+      <li>Préparer RAID1 SSD, UPS, réseau (VLANs, pfSense, switch).</li>
+      <li>Déployer Gateway (Nginx), Keycloak (SSO), DNS internes.</li>
+      <li>Installer Qdrant, vLLM/Ollama, OpenWebUI; publier API interne.</li>
+      <li>Brancher Workbench SISA; config RAG (ingest docs SISA + citations).</li>
+      <li>Installer monitoring (Prometheus/Grafana) + alertes.</li>
+      <li>Durcissements (headers, HSTS, Turnstile côté public), sauvegardes & test restauration.</li>
+    </ol>
+
+    <div class="cta">
+      <div>
+        <strong>SLA interne</strong> : priorités par file d’attente, fallback mini‑modèle CPU, fenêtre maintenance planifiée.<br>
+        <span class="muted">Règle : “ne jamais bloquer l’atelier” — dégradation contrôlée plutôt qu’arrêt.</span>
+      </div>
+      <button class="btn ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">Haut de page</button>
+    </div>
+  </section>
+
+  <section id="achats" class="card">
+    <h2>Liste d’achats</h2>
+    <p class="muted">Sauvegarde locale automatique · Export JSON · Light/Dark</p>
+    <div id="shoplist"></div>
+  </section>
+
+  <section id="logiciels" class="card">
+    <h2>Logiciels requis — Intranet SISA</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Base & Réseau</h3>
+        <ul class="list">
+          <li>pfSense (routeur/firewall), switch manageable (VLAN/LACP).</li>
+          <li>WireGuard / Tailscale (VPN admin; exit FR si besoin).</li>
+          <li>Nginx (gateway), Keycloak (SSO/MFA).</li>
+          <li>RustDesk (support distant) — côté clients.</li>
+        </ul>
+        <h3>IA & RAG</h3>
+        <ul class="list">
+          <li>vLLM (serving OpenAI-like) + Ollama (maquettes).</li>
+          <li>Qdrant (vecteurs), FastAPI (service RAG), OpenWebUI (interface).</li>
+          <li>Prometheus + Grafana (observabilité).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ops & Sauvetage</h3>
+        <ul class="list">
+          <li>Ventoy (USB multi‑boot) + ISOs : SystemRescue, Rescuezilla, Clonezilla, GParted, Ubuntu LTS, Memtest86+.</li>
+          <li>HWiNFO / Libre Hardware Monitor (diagnostics Windows), smartmontools.</li>
+          <li>Outils backup (rsync/rclone), scripts SHA256 (manifest).</li>
+        </ul>
+        <h3>Web & OSBL/PME</h3>
+        <ul class="list">
+          <li>Cloudflare Pages/DNS, Turnstile, Web Analytics, Email Routing.</li>
+          <li>WHC (WordPress/PHP & email) pour besoins dynamiques au Canada.</li>
+          <li>SEO statique : sitemap/robots/OG/JSON‑LD (générés dans nos gabarits).</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Notes</h3>
+    <ul class="list">
+      <li>Évaluer licences éventuelles (ex. HWiNFO Pro seulement si monitoring 24/7 sur hôtes Windows critiques).</li>
+      <li>Zabbix/PRTG envisagés mais **optionnels** (Grafana/Prometheus suffisent au départ).</li>
+      <li>Stockage indices RAG séparé des bruts; rotation clés/secret **90 j**; export audit.</li>
+    </ul>
+  </section>
+
+  <section id="sops" class="card">
+    <h2>SOP & Sécurité (extraits SISA‑Way)</h2>
+    <table>
+      <thead><tr><th>Thème</th><th>Règles</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Format & diffusion</td>
+          <td>HTML‑first (autonome); naming CAR‑YYYYMMDD‑…; changelog en pied de page; accessibilité AA; responsive ≥320px.</td>
+        </tr>
+        <tr>
+          <td>Sécurité & conformité</td>
+          <td>RBAC/SSO/MFA; lecture seule par défaut; double confirmation pour actions sensibles; secrets en coffre; rotation 90 j; redaction en sortie.</td>
+        </tr>
+        <tr>
+          <td>Qualité & évaluation</td>
+          <td>Citations obligatoires côté RAG; “Je ne sais pas” si score faible; métriques précision/latence/coûts suivies en continu.</td>
+        </tr>
+        <tr>
+          <td>Environnements & changements</td>
+          <td>Sandbox → Pré‑prod → Prod; feature flags; rollback 1‑clic; plan incident & escalade.</td>
+        </tr>
+        <tr>
+          <td>Données & index</td>
+          <td>Ingestion normalisée; métadonnées (client/date/confidentialité); backups réguliers (vecteurs+bruts); restauration testée.</td>
+        </tr>
+        <tr>
+          <td>Collaboration & gouvernance</td>
+          <td>HITL pour brouillons (mails/tickets); review bi‑hebdo des risques; design tokens SISA (couleurs/typos).</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="muted" style="margin-top:18px">© SISA — Pack Intranet. Généré le : 2025-09-15</footer>
+</div>
+
+<script>
+// Theme toggle
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('theme');
+  const stored = localStorage.getItem('theme');
+  if(stored) html.setAttribute('data-theme', stored);
+  if(!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    html.setAttribute('data-theme','dark');
+  }
+  btn.addEventListener('click', ()=>{
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  });
+})();
+
+// Inject a compact version of the interactive shopping list (from our separate page)
+(function(){
+  const container = document.getElementById('shoplist');
+  const KEY = 'sisa_shoplist_v1';
+  const tpl = `
+    <div class="toolbar" style="justify-content:flex-end;margin:0 0 8px 0">
+      <button class="btn ghost" id="resetList">Réinitialiser</button>
+      <button class="btn primary" id="exportList">Exporter (.json)</button>
+    </div>
+    <div class="grid-2">
+      <section class="card" style="margin:0">
+        <h3>Infrastructure Intranet</h3>
+        <table id="infra"><thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="rack"><td><input type="checkbox"></td><td>Étagère serveur / rack</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="Zone serveur au fond"></td></tr>
+          <tr data-key="ups"><td><input type="checkbox"></td><td>UPS 900–1500 VA</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="Offres ≤ 50 $"></td></tr>
+          <tr data-key="ssd"><td><input type="checkbox"></td><td>2× SSD entreprise (RAID1)</td><td><input type="number" min="0" value="2"></td><td><input class="note" placeholder="480–960 Go"></td></tr>
+          <tr data-key="caddies"><td><input type="checkbox"></td><td>Caddies R730XD</td><td><input type="number" min="0" value="4"></td><td><input class="note" placeholder="Baies libres"></td></tr>
+          <tr data-key="ventoy"><td><input type="checkbox"></td><td>Clé USB Ventoy 128–256 Go</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="Bundle ISOs + scripts"></td></tr>
+        </tbody></table>
+      </section>
+      <section class="card" style="margin:0">
+        <h3>Réseau & IA</h3>
+        <table id="net"><thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="router"><td><input type="checkbox"></td><td>Routeur pfSense</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="VLAN IA, QoS VoIP"></td></tr>
+          <tr data-key="switch"><td><input type="checkbox"></td><td>Switch manageable</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="VLAN/LACP/PoE"></td></tr>
+          <tr data-key="patch"><td><input type="checkbox"></td><td>Patch panel + CAT6</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="Étiquetage ports"></td></tr>
+          <tr data-key="gpu"><td><input type="checkbox"></td><td>GPU (option)</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="4090/A5000 selon budget"></td></tr>
+          <tr data-key="extssd"><td><input type="checkbox"></td><td>SSD externe 1–2 To</td><td><input type="number" min="0" value="1"></td><td><input class="note" placeholder="Backups rapides"></td></tr>
+        </tbody></table>
+      </section>
+    </div>`;
+
+  container.innerHTML = tpl;
+
+  function save(){
+    const data = {};
+    container.querySelectorAll('table').forEach(table => {
+      const sel = table.id; data[sel] = {};
+      table.querySelectorAll('tbody tr').forEach(tr => {
+        const key = tr.getAttribute('data-key');
+        const inputs = tr.querySelectorAll('input');
+        data[sel][key] = { ck: inputs[0].checked, qty: inputs[1].value, note: inputs[2].value };
+      });
+    });
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+  function load(){
+    const raw = localStorage.getItem(KEY); if(!raw) return;
+    try{
+      const data = JSON.parse(raw);
+      for(const [sel, rows] of Object.entries(data)){
+        const table = container.querySelector('#'+sel); if(!table) continue;
+        for(const [key, st] of Object.entries(rows)){
+          const tr = table.querySelector('tr[data-key="'+key+'"]'); if(!tr) continue;
+          const inputs = tr.querySelectorAll('input');
+          if(inputs[0]) inputs[0].checked = !!st.ck;
+          if(inputs[1] && typeof st.qty!=='undefined') inputs[1].value = st.qty;
+          if(inputs[2] && typeof st.note!=='undefined') inputs[2].value = st.note;
+        }
+      }
+    }catch(e){}
+  }
+  container.addEventListener('change', save, true);
+  load();
+
+  container.querySelector('#resetList').addEventListener('click', ()=>{
+    if(confirm('Réinitialiser la liste ?')){ localStorage.removeItem(KEY); location.reload(); }
+  });
+  container.querySelector('#exportList').addEventListener('click', ()=>{
+    const blob = new Blob([localStorage.getItem(KEY) || '{}'], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'SISA_liste_achats_2025-09-15.json';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+})();
+</script>
+</body>
+</html>

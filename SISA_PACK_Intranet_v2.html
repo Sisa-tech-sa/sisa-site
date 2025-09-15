@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Pack Intranet v2 (Timeline • Déploiement • Achats • Logiciels • Fournisseurs • Coûts)</title>
+<meta name="description" content="Pack HTML autonome pour l’INTRANET SISA avec timeline, déploiement, liste d’achats chiffrée, logiciels, et fournisseurs repères (QC/Canada). Light/Dark, hors-ligne.">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e9eef9; --muted:#a7b0c3;
+    --brand:#0d83ff; --accent:#29a3ff; --ok:#17c964; --warn:#f5a524; --bad:#f31260;
+    --shadow:0 10px 30px rgba(0,0,0,.45); --radius:16px; --maxw:1180px;
+  }
+  html[data-theme="light"]{
+    --bg:#f7f9fc; --panel:#fff; --ink:#0b1220; --muted:#57607c;
+    --shadow:0 10px 30px rgba(16,37,72,.12);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial}
+  .wrap{max-width:var(--maxw);margin:auto;padding:26px}
+  .hero{display:grid;gap:12px;padding:22px;border-radius:20px;background:var(--panel);box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .hero h1{margin:0;font-size:clamp(26px,4vw,44px)}
+  .muted{color:var(--muted)}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin:12px 0}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)}
+  html[data-theme="dark"] .switch::after{left:23px}
+  nav.tabs{display:flex;gap:10px;flex-wrap:wrap}
+  nav.tabs a{display:inline-block;padding:10px 12px;border-radius:12px;text-decoration:none;border:1px solid rgba(100,120,160,.25);color:var(--ink);background:var(--panel)}
+  nav.tabs a:hover{border-color:rgba(41,163,255,.6)}
+  section.card{background:var(--panel);margin-top:16px;padding:18px;border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  h2{margin:0 0 10px 0}
+  .grid-2{display:grid;gap:16px}
+  @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+  .grid-3{display:grid;gap:16px}
+  @media(min-width:1100px){.grid-3{grid-template-columns:1fr 1fr 1fr}}
+  .list{margin:6px 0 0 0;padding:0 0 0 20px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(100,120,160,.35);font-size:.82rem}
+  .ok{color:var(--ok);border-color:rgba(23,201,100,.45)}
+  .warn{color:var(--warn);border-color:rgba(245,165,36,.45)}
+  .bad{color:var(--bad);border-color:rgba(243,18,96,.45)}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 8px;border-top:1px solid rgba(100,120,160,.15);text-align:left;vertical-align:top}
+  thead th{border-top:none;background:transparent;position:sticky;top:0}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:rgba(120,140,170,.15);padding:.1rem .35rem;border-radius:6px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--panel);padding:14px 16px;border-radius:14px;border:1px solid rgba(100,120,160,.12);box-shadow:var(--shadow);margin-top:16px}
+  .btn{border:none;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--brand);color:#fff}
+  .btn.ghost{background:transparent;border:1px solid rgba(100,120,160,.35)}
+  .muted-small{color:var(--muted);font-size:.9rem}
+  @media print{.toolbar,nav.tabs,.cta,.switch{display:none} .card,.hero{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+@media (max-width:480px){.brand img{height:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="SISA Technologies logo"></div>
+    <div>
+      <h1>Pack INTRANET SISA — v2</h1>
+      <div class="muted">Mise à jour : 2025-09-15 · HTML autonome (light/dark) · prêt à imprimer · hors-ligne</div>
+    </div>
+    <div class="toolbar">
+      <nav class="tabs" aria-label="Navigation sections">
+        <a href="#timeline">Timeline</a>
+        <a href="#deploiement">Déploiement</a>
+        <a href="#achats">Achats & Coûts</a>
+        <a href="#logiciels">Logiciels</a>
+        <a href="#fournisseurs">Fournisseurs</a>
+        <a href="#sops">SOP & Sécurité</a>
+      </nav>
+      <button id="theme" class="switch" aria-label="Basculer thème"></button>
+    </div>
+  </header>
+
+  <section id="timeline" class="card">
+    <h2>Timeline — Jalons clés</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Phase 1 — Go-live Intranet</h3>
+        <ul class="list">
+          <li>Serveur SISA (R730XD) prêt : RAID1 SSD entreprise, UPS, réseau propre (VLANs).</li>
+          <li>Publication site vitrine HTML (Cloudflare Pages/DNS).</li>
+          <li>Email Routing + boîtes IMAP (WHC ou autre).</li>
+          <li>Workbench & Lanceur (aperçus) intégrés au portail interne.</li>
+        </ul>
+        <h3>Phase 2 — SISA-IA (v1)</h3>
+        <ul class="list">
+          <li>Serveur d’inférence central (vLLM/Ollama) + API interne.</li>
+          <li>RAG : Qdrant (index), service FastAPI, citations & audit.</li>
+          <li>OpenWebUI (UI interne), gateway Nginx, SSO/quotas.</li>
+          <li>Monitoring Prometheus/Grafana (latence, tokens, GPU/CPU).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Phase 3 — Services & Sécurité</h3>
+        <ul class="list">
+          <li>Kit Cloudflare OSBL/Autonomes/PME (Pages, Turnstile, Analytics).</li>
+          <li>VoIP (FreePBX/Asterisk), trunk SIP CA, E911, TLS/SRTP.</li>
+          <li>Bundle Ventoy (ISOs secours + scripts + SHA256).</li>
+          <li>Offline & faible connectivité : PWA cache + file locale + sync opportuniste.</li>
+        </ul>
+        <h3>Phase 4 — Évolution</h3>
+        <ul class="list">
+          <li>Plan GPU (CPU → 1×GPU → 2×GPU), montée en gamme modèles.</li>
+          <li>Publier app sur stores via PWA + Capacitor (post-stabilisation).</li>
+          <li>Ajouts marketing : carrousels, “Avantages SISA”, site SEO.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="deploiement" class="card">
+    <h2>Déploiement — Architecture & Étapes</h2>
+    <h3>Architecture logique</h3>
+    <table>
+      <thead><tr><th>Bloc</th><th>Rôle</th><th>Détails</th></tr></thead>
+      <tbody>
+        <tr><td>Gateway Nginx</td><td>Point d’entrée API/Apps</td><td>Reverse proxy, quotas, file d’attente simple, headers sécurité, HSTS optionnel.</td></tr>
+        <tr><td>SSO (Keycloak)</td><td>Identité & accès</td><td>OIDC/SAML; MFA; rôles (Admin/Opérateur/Utilisateur); rotation clés 90 j.</td></tr>
+        <tr><td>LLM Serving</td><td>Inférence</td><td>vLLM (OpenAI-like) pour prod; Ollama pour maquettes; modèles 7–14B en 4/8-bit.</td></tr>
+        <tr><td>RAG & Index</td><td>Recherche sémantique</td><td>FastAPI + Qdrant; embeddings GTE/BGE; citations; redaction des données sensibles.</td></tr>
+        <tr><td>UI interne</td><td>Utilisation simple</td><td>OpenWebUI; Workbench SISA (HTML); journaux append-only (audit).</td></tr>
+        <tr><td>Monitoring</td><td>Observabilité</td><td>Prometheus + Grafana; alertes latence/erreurs; tableau de bord coûts/volume.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Structure réseau</h3>
+    <ul class="list">
+      <li>VLAN IA dédié; WireGuard admin; DNS local; QoS VoIP.</li>
+      <li>Chemin : ONT/Modem → pfSense → Switch manageable (VLAN/LACP) → Serveur & postes.</li>
+      <li>Journaux inviolables (append-only) + export audit JSON/CSV.</li>
+      <li>Backups réguliers (indices RAG + bruts) + restauration testée.</li>
+    </ul>
+
+    <h3>Étapes (runbook)</h3>
+    <ol class="list">
+      <li>Préparer RAID1 SSD, UPS, réseau (VLANs, pfSense, switch).</li>
+      <li>Déployer Gateway (Nginx), Keycloak (SSO), DNS internes.</li>
+      <li>Installer Qdrant, vLLM/Ollama, OpenWebUI; publier API interne.</li>
+      <li>Brancher Workbench SISA; config RAG (ingest docs SISA + citations).</li>
+      <li>Installer monitoring (Prometheus/Grafana) + alertes.</li>
+      <li>Durcissements (headers, HSTS, Turnstile côté public), sauvegardes & test restauration.</li>
+    </ol>
+  </section>
+
+  <section id="achats" class="card">
+    <h2>Achats & Coûts — Estimation (CAD)</h2>
+    <p class="muted-small">Les plages de prix sont indicatives (usagé/refurb vs neuf). Tu peux ajuster les prix unitaires — le total se recalcule et se sauvegarde localement.</p>
+    <div class="grid-2">
+      <section class="card" style="margin:0">
+        <h3>Matériel prioritaire</h3>
+        <table id="costs-now">
+          <thead><tr><th>Article</th><th>Qté</th><th>Prix (u.)</th><th>Total</th><th>Plage typique</th></tr></thead>
+          <tbody>
+            <tr data-key="rack"><td>Étagère serveur / rack</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="120"></td><td class="sum"></td><td>80–160</td></tr>
+            <tr data-key="ups"><td>UPS 900–1500 VA</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="80"></td><td class="sum"></td><td>40–180</td></tr>
+            <tr data-key="ssd"><td>SSD entreprise (×2) RAID1</td><td><input type="number" value="2" min="0"></td><td><input class="price" value="70"></td><td class="sum"></td><td>40–120</td></tr>
+            <tr data-key="caddies"><td>Caddies R730XD (×4)</td><td><input type="number" value="4" min="0"></td><td><input class="price" value="15"></td><td class="sum"></td><td>10–20</td></tr>
+            <tr data-key="ventoy"><td>Clé USB Ventoy 128–256 Go</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="25"></td><td class="sum"></td><td>15–35</td></tr>
+            <tr data-key="nvme"><td>Boîtier NVMe USB + SATA/USB</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="35"></td><td class="sum"></td><td>20–50</td></tr>
+            <tr data-key="labels"><td>Étiqueteuse + rubans</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="45"></td><td class="sum"></td><td>30–60</td></tr>
+            <tr data-key="ties"><td>Serre-câbles/Velcro/gaine</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="15"></td><td class="sum"></td><td>10–25</td></tr>
+          </tbody>
+          <tfoot><tr><th colspan="3">Sous-total “Maintenant”</th><th id="subtotal-now"></th><th></th></tr></tfoot>
+        </table>
+      </section>
+      <section class="card" style="margin:0">
+        <h3>Matériel Bientôt / Plus tard</h3>
+        <table id="costs-later">
+          <thead><tr><th>Article</th><th>Qté</th><th>Prix (u.)</th><th>Total</th><th>Plage typique</th></tr></thead>
+          <tbody>
+            <tr data-key="esp32"><td>ESP32 + capteurs (×2)</td><td><input type="number" value="2" min="0"></td><td><input class="price" value="25"></td><td class="sum"></td><td>20–40</td></tr>
+            <tr data-key="router"><td>Routeur pfSense (réemploi/mini-PC)</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="120"></td><td class="sum"></td><td>0–150</td></tr>
+            <tr data-key="switch"><td>Switch manageable 8–24 ports</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="120"></td><td class="sum"></td><td>40–180</td></tr>
+            <tr data-key="patch"><td>Patch panel + CAT6 (lot)</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="60"></td><td class="sum"></td><td>30–80</td></tr>
+            <tr data-key="extssd"><td>SSD externe 1–2 To</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="120"></td><td class="sum"></td><td>80–150</td></tr>
+            <tr data-key="gpu"><td>GPU (option) 4090/4080/A5000</td><td><input type="number" value="0" min="0"></td><td><input class="price" value="2200"></td><td class="sum"></td><td>800–3000+</td></tr>
+            <tr data-key="travel"><td>Routeur de voyage (failover)</td><td><input type="number" value="1" min="0"></td><td><input class="price" value="90"></td><td class="sum"></td><td>60–120</td></tr>
+          </tbody>
+          <tfoot><tr><th colspan="3">Sous-total “Bientôt/Plus tard”</th><th id="subtotal-later"></th><th></th></tr></tfoot>
+        </table>
+      </section>
+    </div>
+    <div class="cta">
+      <div><strong>Total estimé</strong> : <span id="grand-total">—</span> CAD <span class="muted-small">(hors taxes/expédition)</span></div>
+      <div><button class="btn ghost" id="resetCosts">Réinitialiser</button> <button class="btn primary" id="saveCosts">Sauvegarder</button></div>
+    </div>
+  </section>
+
+  <section id="logiciels" class="card">
+    <h2>Logiciels requis — Intranet SISA</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Base & Réseau</h3>
+        <ul class="list">
+          <li>pfSense (routeur/firewall), switch manageable (VLAN/LACP).</li>
+          <li>WireGuard / Tailscale (VPN admin; exit FR si besoin).</li>
+          <li>Nginx (gateway), Keycloak (SSO/MFA).</li>
+          <li>RustDesk (support distant) — côté clients.</li>
+        </ul>
+        <h3>IA & RAG</h3>
+        <ul class="list">
+          <li>vLLM (serving OpenAI-like) + Ollama (maquettes).</li>
+          <li>Qdrant (vecteurs), FastAPI (service RAG), OpenWebUI (interface).</li>
+          <li>Prometheus + Grafana (observabilité).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ops & Sauvetage</h3>
+        <ul class="list">
+          <li>Ventoy (USB multi-boot) + ISOs : SystemRescue, Rescuezilla, Clonezilla, GParted, Ubuntu LTS, Memtest86+.</li>
+          <li>HWiNFO / Libre Hardware Monitor (diagnostics Windows), smartmontools.</li>
+          <li>Outils backup (rsync/rclone), scripts SHA256 (manifest).</li>
+        </ul>
+        <h3>Web & OSBL/PME</h3>
+        <ul class="list">
+          <li>Cloudflare Pages/DNS, Turnstile, Web Analytics, Email Routing.</li>
+          <li>WHC (WordPress/PHP & email) pour besoins dynamiques au Canada.</li>
+          <li>SEO statique : sitemap/robots/OG/JSON-LD (générés dans nos gabarits).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fournisseurs" class="card">
+    <h2>Fournisseurs repères (QC/Canada)</h2>
+    <div class="grid-3">
+      <div class="card" style="margin:0">
+        <h3>Reconditionné / Social</h3>
+        <ul class="list">
+          <li><strong>Insertech</strong> (Montréal) — PC/serveurs/équipements refurb.</li>
+          <li><strong>OPEQ</strong> — Ordinateurs pour écoles/organismes (occasion).</li>
+          <li><strong>GCSurplus</strong> — Surplus gouvernemental (enchères).</li>
+        </ul>
+      </div>
+      <div class="card" style="margin:0">
+        <h3>Refurb & Retail</h3>
+        <ul class="list">
+          <li><strong>Refurb.io</strong> — Ordinateurs remis à neuf.</li>
+          <li><strong>CDW Outlet</strong> — Liquidations pro.</li>
+          <li><strong>OpenBox</strong> — Boîtes ouvertes/retours.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin:0">
+        <h3>Liquidation & Surplus</h3>
+        <ul class="list">
+          <li><strong>Direct Liquidation</strong>, <strong>TechLiquidators</strong>, <strong>B-Stock</strong>.</li>
+          <li><strong>Quantum Lifecycle</strong> — recyclage/remarketing.</li>
+          <li><strong>Curvature/Cisco Refresh</strong> — réseau reconditionné.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted-small">Astuce : noter le <em>prix cible</em> attendu par item (plage typique) et déclencher l’achat seulement si ≤ cible.</p>
+  </section>
+
+  <section id="sops" class="card">
+    <h2>SOP & Sécurité (extraits SISA-Way)</h2>
+    <table>
+      <thead><tr><th>Thème</th><th>Règles</th></tr></thead>
+      <tbody>
+        <tr><td>Format & diffusion</td><td>HTML-first (autonome); naming CAR-YYYYMMDD-…; changelog en pied de page; accessibilité AA; responsive ≥320px.</td></tr>
+        <tr><td>Sécurité & conformité</td><td>RBAC/SSO/MFA; lecture seule par défaut; double confirmation pour actions sensibles; secrets en coffre; rotation 90 j; redaction en sortie.</td></tr>
+        <tr><td>Qualité & évaluation</td><td>Citations obligatoires côté RAG; “Je ne sais pas” si score faible; métriques précision/latence/coûts suivies en continu.</td></tr>
+        <tr><td>Environnements & changements</td><td>Sandbox → Pré-prod → Prod; feature flags; rollback 1-clic; plan incident & escalade.</td></tr>
+        <tr><td>Données & index</td><td>Ingestion normalisée; métadonnées (client/date/confidentialité); backups réguliers (vecteurs+bruts); restauration testée.</td></tr>
+        <tr><td>Collaboration & gouvernance</td><td>HITL pour brouillons; review bi-hebdo; design tokens SISA.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="muted" style="margin-top:18px">© SISA — Pack Intranet v2. Généré le : 2025-09-15</footer>
+</div>
+
+<script>
+// Theme toggle
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('theme');
+  const stored = localStorage.getItem('theme');
+  if(stored) html.setAttribute('data-theme', stored);
+  if(!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    html.setAttribute('data-theme','dark');
+  }
+  btn.addEventListener('click', ()=>{
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  });
+})();
+
+// Cost calculator (persists locally)
+(function(){
+  const KEY = 'sisa_costs_v1';
+  const tables = [document.getElementById('costs-now'), document.getElementById('costs-later')];
+  function fmt(n){ return (Math.round(n*100)/100).toFixed(2); }
+
+  function calc(){
+    let g = 0;
+    tables.forEach((t)=>{
+      let s = 0;
+      t.querySelectorAll('tbody tr').forEach(tr=>{
+        const qty = parseFloat(tr.querySelector('td:nth-child(2) input').value||'0');
+        const pu = parseFloat(tr.querySelector('.price').value||'0');
+        const tot = qty * pu;
+        tr.querySelector('.sum').textContent = fmt(tot);
+        s += tot;
+      });
+      const id = t.id==='costs-now' ? 'subtotal-now' : 'subtotal-later';
+      document.getElementById(id).textContent = fmt(s);
+      g += s;
+    });
+    document.getElementById('grand-total').textContent = fmt(g);
+  }
+
+  function save(){
+    const data = {};
+    tables.forEach(t=>{
+      const rows = {};
+      t.querySelectorAll('tbody tr').forEach(tr=>{
+        rows[tr.getAttribute('data-key')] = {
+          qty: tr.querySelector('td:nth-child(2) input').value,
+          price: tr.querySelector('.price').value
+        };
+      });
+      data[t.id] = rows;
+    });
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+
+  function load(){
+    const raw = localStorage.getItem(KEY); if(!raw) { calc(); return; }
+    try{
+      const data = JSON.parse(raw);
+      tables.forEach(t=>{
+        const rows = data[t.id]||{};
+        t.querySelectorAll('tbody tr').forEach(tr=>{
+          const key = tr.getAttribute('data-key');
+          if(rows[key]){
+            tr.querySelector('td:nth-child(2) input').value = rows[key].qty;
+            tr.querySelector('.price').value = rows[key].price;
+          }
+        });
+      });
+      calc();
+    }catch(e){ calc(); }
+  }
+
+  document.addEventListener('input', (e)=>{
+    if(e.target.closest('#costs-now,#costs-later')){
+      calc(); save();
+    }
+  });
+
+  document.getElementById('resetCosts').addEventListener('click', ()=>{
+    if(confirm('Réinitialiser les coûts ?')){
+      localStorage.removeItem(KEY);
+      location.reload();
+    }
+  });
+  document.getElementById('saveCosts').addEventListener('click', save);
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Hébergement (comparatif & recommandations)</title>
+<meta name="description" content="Comparatif hébergement SISA : GitHub/Netlify/Cloudflare pour statique, WHC pour dynamique/email, et bonnes pratiques.">
+<style>
+  :root{--bg:#0b0d12;--panel:#121622;--ink:#e9eef9;--muted:#a7b0c3;--brand:#0d83ff;--shadow:0 10px 30px rgba(0,0,0,.45)}
+  html[data-theme="light"]{--bg:#f7f9fc;--panel:#fff;--ink:#0b1220;--muted:#57607c;--shadow:0 10px 30px rgba(16,37,72,.12)}
+  *{box-sizing:border-box} html,body{margin:0;padding:0} body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Inter,Roboto,Arial}
+  .wrap{max-width:1100px;margin:auto;padding:26px}
+  .hero{display:flex;align-items:center;gap:12px;background:var(--panel);padding:16px;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .brand img{height:48px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)} .muted{color:var(--muted)}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)} html[data-theme="dark"] .switch::after{left:23px}
+  .card{background:var(--panel);padding:16px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12);margin-top:14px}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 8px;border-top:1px solid rgba(100,120,160,.15);text-align:left;vertical-align:top}
+  thead th{border-top:none}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(100,120,160,.35);font-size:.8rem;margin-right:6px}
+  .ok{color:#17c964;border-color:rgba(23,201,100,.45)} .warn{color:#f5a524;border-color:rgba(245,165,36,.45)} 
+  @media print{.switch{display:none} .card,.hero{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="Logo SISA"></div>
+    <div style="flex:1">
+      <h1>Hébergement — comparatif & recommandations</h1>
+      <div class="muted">Mise à jour : 2025-09-15 · focus sur site statique + intranet SISA</div>
+    </div>
+    <button id="theme" class="switch" aria-label="Basculer thème"></button>
+  </header>
+
+  <section class="card">
+    <h2>Recommandation rapide</h2>
+    <p><span class="tag ok">SISA</span> **Statique** (pages HTML, assets) : <strong>GitHub Pages</strong> pour staging → <strong>Cloudflare Pages</strong> en prod (DNS Cloudflare, Analytics, Turnstile si formulaire).<br>
+    <span class="tag warn">Option</span> **Dynamique** (WordPress/PHP, email) : <strong>WHC</strong> au besoin pour clients qui exigent PHP/IMAP canadiens.</p>
+  </section>
+
+  <section class="card">
+    <h2>Comparatif synthétique</h2>
+    <table>
+      <thead><tr><th>Plateforme</th><th>Points forts</th><th>Limites</th><th>Usage recommandé</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>GitHub Pages</strong></td>
+          <td>Gratuit, sans pubs, déploiement par commit, parfait pour statique.</td>
+          <td>Pas de backend; domaine `github.io` pour staging.</td>
+          <td>Préprod/staging du site SISA; preview client.</td>
+        </tr>
+        <tr>
+          <td><strong>Cloudflare Pages</strong></td>
+          <td>Très rapide CDN global, DNS intégré, Turnstile, Web Analytics.</td>
+          <td>Statique (ou fonctions Workers si besoin ponctuel).</td>
+          <td>Prod SISA + domaines clients (OSBL/Autonomes/PME).</td>
+        </tr>
+        <tr>
+          <td><strong>Netlify</strong></td>
+          <td>Drag & drop ultra simple, previews par PR.</td>
+          <td>Plan gratuit limité; domaine netlify.app.</td>
+          <td>Maquettes rapides si on évite Git au début.</td>
+        </tr>
+        <tr>
+          <td><strong>WHC</strong></td>
+          <td>cPanel, PHP/MySQL, email IMAP au Canada.</td>
+          <td>Moins optimisé pour statique; coût récurrent.</td>
+          <td>Sites dynamiques ou besoins email gérés.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Checklist de mise en ligne (statique)</h2>
+    <ol>
+      <li>Mettre le site dans un dépôt Git (GitHub).</li>
+      <li>Activer Pages (GitHub/Cloudflare) — build vide, dossier racine `/`.</li>
+      <li>Images en WebP/avif si possible, `loading="lazy"`, tailles définies.</li>
+      <li>Meta SEO + OpenGraph; `sitemap.xml` + `robots.txt`.</li>
+      <li>Sur Cloudflare : Analytics + (si formulaire) Turnstile; politique CSP simple.</li>
+    </ol>
+  </section>
+
+  <footer class="muted">© SISA — Hébergement & bonnes pratiques.</footer>
+</div>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('theme');
+  const stored = localStorage.getItem('theme');
+  if(stored) html.setAttribute('data-theme', stored);
+  if(!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    html.setAttribute('data-theme','dark');
+  }
+  btn.addEventListener('click', ()=>{
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  });
+})();
+</script>
+</body>
+</html>

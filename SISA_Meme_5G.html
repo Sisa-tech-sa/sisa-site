@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mème 5G — SISA (HTML autonome)</title>
+<meta name="description" content="Page HTML autonome pour générer un visuel mème 5G avec bulles/captions, variantes SISA, et export impression.">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e9eef9; --muted:#a7b0c3;
+    --brand:#0d83ff; --accent:#29a3ff; --ring:0 0 0 3px rgba(13,131,255,.2);
+    --shadow:0 10px 30px rgba(0,0,0,.45); --radius:16px;
+  }
+  html[data-theme="light"]{
+    --bg:#f7f9fc; --panel:#ffffff; --ink:#0b1220; --muted:#57607c;
+    --shadow:0 10px 30px rgba(16,37,72,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial}
+  .wrap{max-width:1100px;margin:auto;padding:26px}
+  .hero{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel);padding:16px;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .hero h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .muted{color:var(--muted)}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)}
+  html[data-theme="dark"] .switch::after{left:23px}
+
+  .grid{display:grid;gap:16px}
+  @media(min-width:980px){.grid{grid-template-columns:360px 1fr}}
+
+  .card{background:var(--panel);padding:14px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  label{display:block;margin:.4rem 0 .2rem}
+  input[type="text"], textarea, select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(100,120,160,.35);background:transparent;color:inherit}
+  input:focus, textarea:focus, select:focus{outline:none;box-shadow:var(--ring)}
+  .btn{display:inline-flex;gap:8px;align-items:center;border:none;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--brand);color:white}
+  .btn.ghost{background:transparent;border:1px solid rgba(100,120,160,.35)}
+
+  .stage{position:relative;background:#000;border-radius:16px;overflow:hidden;min-height:360px}
+  .stage img{display:block;width:100%;height:auto}
+  .bubble{position:absolute;max-width:60%;top:6%;left:6%;background:#fff;color:#000;padding:12px 14px;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.35);font-weight:700;font-size:clamp(16px,2.4vw,26px);line-height:1.2}
+  .bubble::after{content:"";position:absolute;bottom:-16px;left:24px;border-width:16px;border-style:solid;border-color:#fff transparent transparent transparent}
+  html[data-theme="dark"] .bubble{background:#fffffe;color:#111}
+  html[data-theme="dark"] .bubble::after{border-color:#fffffe transparent transparent transparent}
+
+  .watermark{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;padding:6px 10px;border-radius:999px;font-size:.9rem}
+  html[data-theme="light"] .watermark{background:rgba(10,20,40,.45)}
+
+  .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px}
+  @media print{.switch,.card.controls,.cta{display:none} .hero,.card,.stage{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+@media (max-width:480px){.brand img{height:36px}}
+.watermark-img{position:absolute;right:10px;bottom:64px;width:78px;height:auto;opacity:.95;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));}
+@media (max-width:540px){.watermark-img{width:56px;bottom:56px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="SISA Technologies logo"></div>
+    <div>
+      <h1>Mème 5G — SISA</h1>
+      <div class="muted">HTML autonome (light/dark) · prêt à imprimer · 2025-09-15</div>
+    </div>
+    <button id="theme" class="switch" aria-label="Basculer thème"></button>
+  </header>
+
+  <div class="grid">
+    <section class="card controls">
+      <h2 style="margin:0 0 8px 0">Contrôles</h2>
+      <label for="preset">Variantes</label>
+      <select id="preset">
+        <option value="original">Original (5G)</option>
+        <option value="sisa">Version SISA</option>
+        <option value="wifi">Variante Wi‑Fi</option>
+        <option value="meme">Mème punchline</option>
+        <option value="linkedin">LinkedIn (corporate)</option>
+        <option value="custom">Personnalisée…</option>
+      </select>
+
+      <label for="text">Texte bulle</label>
+      <textarea id="text" rows="3">Mais on capte hyper bien la 5G !!</textarea>
+
+      <div style="display:flex;gap:8px;margin-top:8px"><label><input type="checkbox" id="showLogoWm" checked> Logo SISA</label>
+        <button id="apply" class="btn primary">Appliquer</button>
+        <button id="print" class="btn ghost">Imprimer / PDF</button>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(100,120,160,.2);margin:12px 0">
+      <label for="wm">Watermark (ex: SISA)</label>
+      <input id="wm" type="text" placeholder="SISA" value="SISA">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <label><input type="checkbox" id="showWm" checked> Afficher watermark</label>
+      </div>
+
+      <p class="muted" style="margin-top:12px">Astuce : imprime en PDF pour partager sur réseaux sociaux. Alt‑text (accessibilité) inclus.</p>
+    </section>
+
+    <section class="card">
+      <div class="stage" role="img" aria-label="Un homme souriant tient un smartphone affichant 5G devant une scène apocalyptique avec feux et météorite. Bulle : Mais on capte hyper bien la 5G !!">
+        <img id="img" src="/mnt/data/547261112_2995616263941871_5985482880680988429_n.jpg" alt="Homme souriant au premier plan, scène apocalyptique au fond, smartphone 5G.">
+        <div id="bubble" class="bubble">Mais on capte hyper bien la 5G !!</div>
+        <div id="wmBadge" class="watermark">SISA</div>
+        <img id="wmImg" class="watermark-img" src="assets/logo_sisa.png" alt="Logo SISA">
+      </div>
+      <div class="cta">
+        <span class="muted">Clique dans la bulle pour la déplacer au besoin (drag & drop).</span>
+      </div>
+    </section>
+  </div>
+
+  <footer class="muted" style="margin-top:14px">© SISA — usage interne / démo mème. Image fournie par l’utilisateur.</footer>
+</div>
+
+<script>
+(function(){{
+  // Theme toggle
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('theme');
+  const stored = localStorage.getItem('theme');
+  if(stored) html.setAttribute('data-theme', stored);
+  if(!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){{
+    html.setAttribute('data-theme','dark');
+  }}
+  themeBtn.addEventListener('click', ()=>{{
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  }});
+
+  // Presets
+  const presets = {{
+    original: "Mais on capte hyper bien la 5G !!",
+    sisa: "Le monde peut brûler. Ton intranet, lui, reste en ligne. — SISA",
+    wifi: "Dehors 5G, dedans Wi‑Fi SISA : 250 pieds de sérénité.",
+    meme: "Panique pas. J’ai… plein de barres.",
+    linkedin: "La vraie performance, c’est quand ça reste disponible quand tout va mal. — SISA"
+  }};
+  const preset = document.getElementById('preset');
+  const text = document.getElementById('text');
+  const bubble = document.getElementById('bubble');
+  const apply = document.getElementById('apply');
+  const wmInput = document.getElementById('wm');
+  const showWm = document.getElementById('showWm');
+  const wmBadge = document.getElementById('wmBadge');
+  const showLogoWm = document.getElementById('showLogoWm');
+  const wmImg = document.getElementById('wmImg');
+  const printBtn = document.getElementById('print');
+
+  preset.addEventListener('change', ()=>{
+    const v = preset.value;
+    if(v === 'custom') return;
+    text.value = presets[v] || "";
+  });
+  apply.addEventListener('click', ()=>{
+    bubble.textContent = text.value.trim() || " ";
+    wmBadge.textContent = wmInput.value.trim() || "";
+    wmBadge.style.display = showWm.checked ? 'block' : 'none';
+    wmImg.style.display = showLogoWm && showLogoWm.checked ? 'block' : 'none';
+    // Update aria-label for accessibility
+    const stage = document.querySelector('.stage');
+    stage.setAttribute('aria-label', 'Un homme souriant tient un smartphone affichant 5G devant une scène apocalyptique. Bulle : ' + bubble.textContent);
+  });
+
+  // Drag bubble
+  let dragging = false, ox=0, oy=0;
+  bubble.style.cursor = 'move';
+  bubble.addEventListener('mousedown', (e)=>{{ dragging = true; ox=e.offsetX; oy=e.offsetY; }});
+  document.addEventListener('mouseup', ()=> dragging = false);
+  document.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    const stage = document.querySelector('.stage').getBoundingClientRect();
+    let x = e.clientX - stage.left - ox;
+    let y = e.clientY - stage.top - oy;
+    x = Math.max(6, Math.min(x, stage.width - bubble.offsetWidth - 6));
+    y = Math.max(6, Math.min(y, stage.height - bubble.offsetHeight - 6));
+    bubble.style.left = x + 'px';
+    bubble.style.top = y + 'px';
+  });
+
+  printBtn.addEventListener('click', ()=> window.print());
+  if(showLogoWm){ wmImg.style.display = showLogoWm.checked ? 'block' : 'none'; showLogoWm.addEventListener('change', ()=>{ wmImg.style.display = showLogoWm.checked ? 'block' : 'none'; }); }
+}})();
+</script>
+</body>
+</html>

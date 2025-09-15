@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Staging Workbench (GitHub Pages)</title>
+<meta name="description" content="Staging SISA: links vers pages HTML pour prévisualisation avant migration Cloudflare Pages.">
+<style>
+  :root{--bg:#0b0d12;--panel:#121622;--ink:#e9eef9;--muted:#a7b0c3;--brand:#0d83ff;--shadow:0 10px 30px rgba(0,0,0,.45)}
+  @media(prefers-color-scheme:light){:root{--bg:#f7f9fc;--panel:#fff;--ink:#0b1220;--muted:#57607c;--shadow:0 10px 30px rgba(16,37,72,.12)}}
+  *{box-sizing:border-box} html,body{margin:0;padding:0} body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Inter,Roboto,Arial}
+  .wrap{max-width:960px;margin:auto;padding:26px}
+  .hero{background:var(--panel);border:1px solid rgba(100,120,160,.12);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+  h1{margin:0} .muted{color:var(--muted)}
+  ul.links{list-style:none;padding:0;margin:16px 0;display:grid;gap:10px}
+  ul.links li a{display:block;padding:12px 14px;border-radius:12px;border:1px solid rgba(100,120,160,.25);text-decoration:none;color:inherit;background:var(--panel)}
+  ul.links li a:hover{border-color:#2993ff}
+  footer{margin-top:16px;color:var(--muted)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+@media (max-width:480px){.brand img{height:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="SISA Technologies logo"></div>
+    <h1>SISA — Staging Workbench</h1>
+    <div class="muted">Prévisualisation GitHub Pages · Dernière mise à jour: 2025-09-15</div>
+  </header>
+
+  <ul class="links">
+    <li><a href="SISA_hebergement.html">Page Hébergement (comparatif)</a></li>
+    <li><a href="SISA_Liste_Achats.html">Liste d’achats (interactive)</a></li>
+    <li><a href="SISA_PACK_Intranet.html">Pack Intranet — v1</a></li>
+    <li><a href="SISA_PACK_Intranet_v2.html">Pack Intranet — v2 (fournisseurs + coûts)</a></li>
+    <li><a href="SISA_PACK_Intranet_v3_WIFI.html">Pack Intranet — v3 (module Wi‑Fi)</a></li>
+    <li><a href="SISA_Meme_5G.html">Mème 5G (éditeur HTML)</a></li>
+  
+    <li><a href="SISA_Historique_Roadmap.html">Historique & Roadmap</a></li></ul>
+
+  <footer>© SISA — Staging. Déployer ce dossier tel quel sur GitHub Pages; ensuite connecter le repo à Cloudflare Pages.</footer>
+</div>
+</body>
+</html>

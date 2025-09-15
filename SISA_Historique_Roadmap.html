@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Historique & Roadmap</title>
+<meta name="description" content="Bref historique des travaux SISA et résumé de la roadmap selon l’échéancier (phases). HTML autonome, light/dark, prêt à imprimer.">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e9eef9; --muted:#a7b0c3;
+    --brand:#0d83ff; --ok:#17c964; --warn:#f5a524; --bad:#f31260; --info:#29a3ff;
+    --shadow:0 10px 30px rgba(0,0,0,.45); --radius:16px; --maxw:1100px;
+  }
+  html[data-theme="light"]{
+    --bg:#f7f9fc; --panel:#ffffff; --ink:#0b1220; --muted:#57607c;
+    --shadow:0 10px 30px rgba(16,37,72,.12);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial}
+  .wrap{max-width:var(--maxw);margin:auto;padding:26px}
+  .hero{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--panel);padding:16px;border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .muted{color:var(--muted)}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)} html[data-theme="dark"] .switch::after{left:23px}
+  section.card{background:var(--panel);margin-top:16px;padding:18px;border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  h2{margin:0 0 8px 0}
+  .grid-2{display:grid;gap:16px}
+  @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+  .timeline{position:relative;padding-left:22px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:rgba(120,140,170,.35)}
+  .t-item{position:relative;margin:12px 0}
+  .t-item::before{content:"";position:absolute;left:-16px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--info);box-shadow:0 0 0 3px rgba(41,163,255,.25)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(100,120,160,.35);font-size:.8rem;margin-right:6px}
+  .ok{color:var(--ok);border-color:rgba(23,201,100,.45)}
+  .warn{color:var(--warn);border-color:rgba(245,165,36,.45)}
+  .bad{color:var(--bad);border-color:rgba(243,18,96,.45)}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 8px;border-top:1px solid rgba(100,120,160,.15);text-align:left;vertical-align:top}
+  thead th{border-top:none}
+  .todo li{margin:.4rem 0}
+  @media print{.switch{display:none} .card,.hero{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">
+      <img src="assets/logo_sisa.png" alt="Logo SISA">
+      <div>
+        <h1>SISA — Historique & Roadmap</h1>
+        <div class="muted">Mise à jour : 2025-09-15 · résumé exécutif</div>
+      </div>
+    </div>
+    <button id="theme" class="switch" aria-label="Basculer thème"></button>
+  </header>
+
+  <section class="card">
+    <h2>Historique (derniers travaux)</h2>
+    <div class="timeline">
+      <div class="t-item"><strong>Pack Intranet v1</strong> — Timeline, déploiement, SOPs et liste d’achats (HTML autonome).</div>
+      <div class="t-item"><strong>Comparatif hébergement</strong> — Décision: staging <em>GitHub Pages</em> → prod <em>Cloudflare Pages</em>.</div>
+      <div class="t-item"><strong>Pack v2</strong> — Ajout <em>Fournisseurs QC/Canada</em> et <em>Estimations de coûts</em> interactives (CAD).</div>
+      <div class="t-item"><strong>Pack v3 (Wi‑Fi)</strong> — Module couverture ~250 pieds (APs intérieurs + AP extérieur), BOM et coûts.</div>
+      <div class="t-item"><strong>Éditeur mème 5G</strong> — Page HTML avec bulles, watermark texte + logo SISA.</div>
+      <div class="t-item"><strong>Bundle staging</strong> — Index lanceur, assets, logo officiel partout; ZIP prêt à pousser sur GitHub.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Roadmap par phases (échéancier)</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Phase 1 — Go‑live Intranet</h3>
+        <ul>
+          <li>Serveur SISA (R730XD), RAID1 SSD, UPS.</li>
+          <li>Site vitrine HTML (staging GitHub Pages).</li>
+          <li>Email Routing + boîtes IMAP (temporaire si besoin).</li>
+          <li>Workbench/Lanceur intégrés.</li>
+        </ul>
+        <p><span class="pill ok">En cours</span></p>
+      </div>
+      <div>
+        <h3>Phase 2 — SISA‑IA (v1)</h3>
+        <ul>
+          <li>vLLM/Ollama (serving), API interne.</li>
+          <li>RAG : Qdrant + FastAPI, citations & audit.</li>
+          <li>OpenWebUI, Nginx gateway, SSO/quotas.</li>
+          <li>Prometheus/Grafana (latence, tokens, charge).</li>
+        </ul>
+        <p><span class="pill warn">Prochain</span></p>
+      </div>
+      <div>
+        <h3>Phase 3 — Wi‑Fi & Services</h3>
+        <ul>
+          <li>Maillage Wi‑Fi (APs intérieurs + extérieur IP65).</li>
+          <li>VoIP FreePBX/Asterisk (TLS/SRTP, E911).</li>
+          <li>Ventoy (ISOs secours + scripts + SHA256).</li>
+          <li>PWA cache & sync opportuniste (faible connectivité).</li>
+        </ul>
+        <p><span class="pill warn">Planifié</span></p>
+      </div>
+      <div>
+        <h3>Phase 4 — Évolution</h3>
+        <ul>
+          <li>GPU plan (CPU → 1×GPU → 2×GPU).</li>
+          <li>Publication app (PWA/Capacitor) après stabilisation.</li>
+          <li>Marketing : Avantages SISA, SEO, carrousels.</li>
+        </ul>
+        <p><span class="pill">À venir</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Feuille de route synthèse</h2>
+    <table>
+      <thead><tr><th>Élément</th><th>Livrable</th><th>Statut</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Site statique</td><td>Staging GitHub Pages</td><td><span class="pill ok">Live/En cours</span></td><td>Migration propre vers Cloudflare Pages prévue.</td></tr>
+        <tr><td>Pack Intranet</td><td>v1 → v3 (Wi‑Fi)</td><td><span class="pill ok">Livré</span></td><td>Coûts & fournisseurs inclus.</td></tr>
+        <tr><td>IA interne</td><td>vLLM + RAG</td><td><span class="pill warn">Prochain</span></td><td>SSO/quotas; audit & métriques.</td></tr>
+        <tr><td>Réseau</td><td>VLANs / pfSense / PoE</td><td><span class="pill warn">Planifié</span></td><td>GUEST isolé; QoS VoIP.</td></tr>
+        <tr><td>VoIP</td><td>FreePBX/Asterisk</td><td><span class="pill">À venir</span></td><td>Trunk SIP CA; E911.</td></tr>
+        <tr><td>Marketing</td><td>Page “Avantages SISA”</td><td><span class="pill">À venir</span></td><td>Carrousels, SEO, OG/JSON‑LD.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Actions immédiates</h2>
+    <ul class="todo">
+      <li>Uploader/valider le staging GitHub Pages (index + assets).</li>
+      <li>Brancher le repo sur Cloudflare Pages (build vide, output `/`).</li>
+      <li>Configurer DNS + Web Analytics (Turnstile si formulaires).</li>
+      <li>Initialiser vLLM/Ollama + Qdrant en pré‑prod, mettre en place SSO/quotas.</li>
+      <li>Lancer le déploiement Wi‑Fi (APs, canaux, RSSI minimal) et tests de couverture.</li>
+    </ul>
+  </section>
+
+  <footer class="muted" style="margin-top:12px">© SISA — Historique & Roadmap. Généré le : 2025-09-15</footer>
+</div>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('theme');
+  const stored = localStorage.getItem('theme');
+  if(stored) html.setAttribute('data-theme', stored);
+  if(!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    html.setAttribute('data-theme','dark');
+  }
+  btn.addEventListener('click', ()=>{
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  });
+})();
+</script>
+</body>
+</html>

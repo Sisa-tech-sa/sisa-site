@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SISA — Liste d’achats (interactive)</title>
+<meta name="description" content="Checklist SISA d’achats matériels/logiciels pour Intranet, IA, Réseau, VoIP et Marketing. Light/Dark, hors-ligne, avec sauvegarde locale.">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#121622; --ink:#e9eef9; --muted:#a7b0c3;
+    --brand:#0d83ff; --ok:#17c964; --warn:#f5a524; --bad:#f31260;
+    --shadow:0 10px 30px rgba(0,0,0,.45); --radius:14px;
+  }
+  html[data-theme="light"]{
+    --bg:#f7f9fc; --panel:#fff; --ink:#0b1220; --muted:#57607c;
+    --shadow:0 10px 30px rgba(16,37,72,.12);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0} body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial}
+  .wrap{max-width:1100px;margin:auto;padding:26px}
+  .hero{display:flex;gap:16px;justify-content:space-between;align-items:center;background:var(--panel);padding:16px;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:48px;width:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .muted{color:var(--muted)}
+  .switch{position:relative;width:48px;height:28px;border-radius:999px;background:rgba(120,140,170,.35);border:none;cursor:pointer}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  html[data-theme="dark"] .switch{background:rgba(70,90,120,.7)}
+  html[data-theme="dark"] .switch::after{left:23px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  .card{background:var(--panel);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(100,120,160,.12)}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 8px;border-top:1px solid rgba(100,120,160,.15)}
+  thead th{text-align:left;border-top:none}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;border:1px solid rgba(100,120,160,.35)}
+  .p-now{border-color:rgba(23,201,100,.5);color:var(--ok)}
+  .p-soon{border-color:rgba(245,165,36,.5);color:var(--warn)}
+  .p-later{border-color:rgba(243,18,96,.4);color:var(--bad)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;margin:12px 0}
+  .btn{border:none;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--brand);color:white}
+  .btn.ghost{background:transparent;border:1px solid rgba(100,120,160,.35)}
+  .note{width:100%}
+  footer{margin-top:16px;color:var(--muted);font-size:.92rem}
+  @media print{.toolbar,.switch{display:none} .card,.hero{box-shadow:none;border:1px solid #cbd5e1} .wrap{padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="assets/logo_sisa.png" alt="Logo SISA"></div>
+    <div style="flex:1">
+      <h1>Liste d’achats — SISA</h1>
+      <div class="muted">Mise à jour: 2025-09-15 · Light/Dark · Sauvegarde locale automatique</div>
+    </div>
+    <button id="theme" class="switch" aria-label="Basculer thème"></button>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn ghost" id="reset">Réinitialiser</button>
+    <button class="btn primary" id="export">Exporter (.json)</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Infrastructure Intranet</h2>
+      <table id="infra">
+        <thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Priorité</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="rack"><td><input type="checkbox"></td><td>Étagère serveur / rack</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="Zone serveur au fond"></td></tr>
+          <tr data-key="ups"><td><input type="checkbox"></td><td>UPS 900–1500 VA</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="Vérifier offres ≤ 50 $"></td></tr>
+          <tr data-key="ssd"><td><input type="checkbox"></td><td>2× SSD entreprise (RAID1)</td><td><input type="number" min="0" value="2"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="480–960 Go"></td></tr>
+          <tr data-key="caddies"><td><input type="checkbox"></td><td>Caddies R730XD</td><td><input type="number" min="0" value="4"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="Baies libres"></td></tr>
+          <tr data-key="ventoy"><td><input type="checkbox"></td><td>Clé USB Ventoy 128–256 Go</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="Bundle ISOs + scripts"></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Réseau & Sécurité</h2>
+      <table id="reseau">
+        <thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Priorité</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="router"><td><input type="checkbox"></td><td>Routeur/Firewall pfSense</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="VLAN IA, NAT, QoS VoIP"></td></tr>
+          <tr data-key="switch"><td><input type="checkbox"></td><td>Switch manageable (VLAN/LACP)</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="PoE si VoIP/APs"></td></tr>
+          <tr data-key="patch"><td><input type="checkbox"></td><td>Patch panel + câbles CAT6 (lot)</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-now">Maintenant</span></td><td><input class="note" placeholder="Étiquetage ports + plan de baie"></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>IA — Serveur d’inférence</h2>
+      <table id="ia">
+        <thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Priorité</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="gpu"><td><input type="checkbox"></td><td>GPU (option) — 4090/4080/A5000</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-soon">Bientôt</span></td><td><input class="note" placeholder="Selon budget/compatibilité"></td></tr>
+          <tr data-key="qdrant"><td><input type="checkbox"></td><td>Stockage index RAG (SSD dédié)</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-soon">Bientôt</span></td><td><input class="note" placeholder="/data/indices séparé"></td></tr>
+          <tr data-key="monitoring"><td><input type="checkbox"></td><td>Monitoring (Prometheus/Grafana)</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-soon">Bientôt</span></td><td><input class="note" placeholder="Dash perf/tokens/latence"></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Wi‑Fi & VoIP</h2>
+      <table id="wifi">
+        <thead><tr><th>✓</th><th>Article</th><th>Qté</th><th>Priorité</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr data-key="ap"><td><input type="checkbox"></td><td>APs intérieurs (Wi‑Fi 6/6E)</td><td><input type="number" min="0" value="2"></td><td><span class="pill p-soon">Bientôt</span></td><td><input class="note" placeholder="Plafond, maillage ou PoE"></td></tr>
+          <tr data-key="apext"><td><input type="checkbox"></td><td>AP extérieur (IP65+)</td><td><input type="number" min="0" value="1"></td><td><span class="pill p-soon">Bientôt</span></td><td><input class="note" placeholder="250 pieds rayon, parafoudre"></td></tr>
+          <tr data-key="voip"><td><input type="checkbox"></td><td>FreePBX (VM) + téléphones IP</td><td><input type="number" min="0" value="2"></td><td><span class="pill p-later">Plus tard</span></td><td><input class="note" placeholder="TLS/SRTP, E911"></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <footer>© SISA — Cette page fonctionne hors-ligne et sauvegarde vos entrées dans le navigateur.</footer>
+</div>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('theme');
+  const resetBtn = document.getElementById('reset');
+  const exportBtn = document.getElementById('export');
+  const KEY = 'sisa_shoplist_v1';
+
+  // Theme
+  const storedTheme = localStorage.getItem('theme');
+  if(storedTheme) html.setAttribute('data-theme', storedTheme);
+  if(!storedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    html.setAttribute('data-theme','dark');
+  }
+  themeBtn.addEventListener('click', () => {
+    const now = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', now);
+    localStorage.setItem('theme', now);
+  });
+
+  function load() {
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      for (const [sel, rows] of Object.entries(data)) {
+        const table = document.getElementById(sel);
+        if(!table) continue;
+        for (const [key, st] of Object.entries(rows)) {
+          const tr = table.querySelector('tr[data-key="'+key+'"]');
+          if(!tr) continue;
+          const inputs = tr.querySelectorAll('input');
+          if(inputs[0] && typeof st.ck === 'boolean') inputs[0].checked = st.ck;
+          if(inputs[1] && typeof st.qty !== 'undefined') inputs[1].value = st.qty;
+          if(inputs[2] && typeof st.note !== 'undefined') inputs[2].value = st.note;
+        }
+      }
+    } catch(e) {}
+  }
+  function save() {
+    const data = {};
+    document.querySelectorAll('table').forEach(table => {
+      const sel = table.id;
+      data[sel] = {};
+      table.querySelectorAll('tbody tr').forEach(tr => {
+        const key = tr.getAttribute('data-key');
+        const inputs = tr.querySelectorAll('input');
+        data[sel][key] = {
+          ck: inputs[0].checked,
+          qty: inputs[1].value,
+          note: inputs[2].value
+        };
+      });
+    });
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+  load();
+  document.body.addEventListener('change', save, true);
+
+  resetBtn.addEventListener('click', () => {
+    if(confirm('Réinitialiser la liste ?')) {
+      localStorage.removeItem(KEY);
+      location.reload();
+    }
+  });
+
+  exportBtn.addEventListener('click', () => {
+    const blob = new Blob([localStorage.getItem(KEY) || '{}'], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'SISA_liste_achats_2025-09-15.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+})();
+</script>
+</body>
+</html>
